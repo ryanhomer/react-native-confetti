@@ -55,7 +55,7 @@ class ConfettiView extends Component {
          this.confettiIndex = 0;
        }
        if(confettis.length === 0 && onComplete && typeof onComplete === 'function') {
-         onComplete();        
+         onComplete();
        }
   }
 
@@ -64,23 +64,24 @@ class ConfettiView extends Component {
     this.confettiIndex = 0;
     const { onComplete } = this.state;
     if(onComplete && typeof onComplete === 'function') {
-      onComplete();        
+      onComplete();
     }
     this.setState({ confettis: [], onComplete: null });
   }
 
   render() {
        let {confettis} = this.state;
-       let {...otherProps} = this.props
+       let {ConfettiComponent, ...otherProps} = this.props
        return <View style={styles.container}>
          {confettis.map(confetti => {
-             return <Confetti key={confetti.key} index={confetti.key} onAnimationComplete={this.removeConfetti.bind(this, confetti.key)} colors={this.props.colors} {...otherProps}/>
+             return <ConfettiComponent key={confetti.key} index={confetti.key} onAnimationComplete={this.removeConfetti.bind(this, confetti.key)} colors={this.props.colors} {...otherProps}/>
          })}
        </View>
   }
 }
 
 ConfettiView.defaultProps = {
+   ConfettiComponent: Confetti,
    confettiCount: 100,
    timeout: 30,
    untilStopped: false
